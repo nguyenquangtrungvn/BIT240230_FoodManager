@@ -1,20 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from "react";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { LanguageProvider } from "./src/context/LanguageContext";
+import AppNavigator from "./src/navigation/AppNavigator";
+import { seedIfEmpty } from "./src/utils/seed";
 
 export default function App() {
+  useEffect(() => {
+    seedIfEmpty().catch(() => {}); // lỗi mạng sẽ hiện ở màn hình danh sách
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaProvider>
+      <LanguageProvider>
+        <AppNavigator />
+      </LanguageProvider>
+    </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
